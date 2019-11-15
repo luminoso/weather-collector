@@ -1,0 +1,7 @@
+version: "3"
+services:
+  weather-datasource:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: unless-stopped

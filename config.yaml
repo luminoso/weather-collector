@@ -1,0 +1,28 @@
+refresh_rate_minutes: 7
+verbosity: INFO
+
+output:
+  console: true
+  writefiles: true
+#  kafka:
+#    address: 'xxx:9092'
+
+sources:
+  ipma:
+    ipma_globalIds:
+    ipma_5days_local:
+    ipma_3days_day:
+    ipma_seismicity:
+    ipma_weatherIds:
+    ipma_windClasses:
+
+  ipma_unofficial:
+    ipma_dea:
+    ipma_hourly:
+    ipma_sto_hourly:
+    ipma_sto_daily:
+    ipma_stations:
+    ipma_warnings:
+    ipma_locations:
+    ipma_districts:
+    ipma_wwis:
