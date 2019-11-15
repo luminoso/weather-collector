@@ -15,7 +15,7 @@ Main structure guideline:
 
   
 Basic architecture:
-<p align="center"><img src="https://github.com/luminoso/weather-aggregator/raw/master/doc/main%20loop.jpg" height="500"/></p>
+<p align="center"><img src="https://github.com/luminoso/weather-collector/raw/master/doc/main%20loop.jpg" height="500"/></p>
 
 ## 1. New source example
 
