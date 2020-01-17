@@ -24,7 +24,7 @@ def main(sources: List[GenericSource], outputs: list, refresh_rate_min: int):
                 try:
                     # checks if source has new data since last call
                     if source:
-                        output(source)
+                        output.write(source)
                     else:
                         logging.debug(f"{source.name} has no new items")
 
@@ -47,9 +47,9 @@ if __name__ == "__main__":
     instanciate_logging(config)
 
     # check which sources to pull, import modules, create classes
-    sources = instanciate_sources(config['sources'])
+    sources = instanciate_sources(config)
     try:
-        sources = instanciate_sources(config['sources'])
+        sources = instanciate_sources(config)
     except Exception as e:
         # many things can go wrong here
         print("Can't instantiate all sources")
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     # create outputs. this may fail due to some kafka unavailability
     try:
-        outputs = instanciate_outputs(config['output'])
+        outputs = instanciate_outputs(config)
     except NoBrokersAvailable:
         print("Kafka broker not reachable.")
         exit(KAFKA_BROKER_NOT_FOUND)
@@ -69,3 +69,6 @@ if __name__ == "__main__":
         main(sources, outputs, config['refresh_rate_minutes'])
     except KeyboardInterrupt:
         logging.info(f"Exiting...")
+
+
+

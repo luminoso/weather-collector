@@ -4,8 +4,8 @@ from utils.genericSource import GenericSource
 
 
 class ipma_globalIds(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
         self.url = 'http://api.ipma.pt/open-data/distrits-islands.json'
 
     def refresh_source(self):
@@ -18,8 +18,8 @@ class ipma_globalIds(GenericSource):
 
 
 class ipma_5days_local(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
         self.globalIds = ipma_globalIds()
 
     def refresh_source(self):
@@ -53,8 +53,8 @@ class ipma_5days_local(GenericSource):
 
 
 class ipma_3days_day(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
 
     def refresh_source(self):
         self.data = []
@@ -80,8 +80,8 @@ class ipma_3days_day(GenericSource):
 
 
 class ipma_seismicity(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
 
     def refresh_source(self):
         self.data = []
@@ -101,8 +101,8 @@ class ipma_seismicity(GenericSource):
 
 
 class ipma_weatherIds(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
 
     def refresh_source(self):
         self.data = []
@@ -114,8 +114,8 @@ class ipma_weatherIds(GenericSource):
 
 
 class ipma_windClasses(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
+    def __init__(self, name=None):
+        super().__init__(name)
 
     def refresh_source(self):
         self.data = []
@@ -124,18 +124,3 @@ class ipma_windClasses(GenericSource):
             for data in req['data']:
                 self.append_ipma_metadata(req, data)
                 self.data.append(data)
-
-# logging.basicConfig(
-#     level=logging.DEBUG,
-#     format="%(asctime)s %(funcName)s %(name)s [%(module)-12.12s] [%(levelname)-5.5s]  %(message)s",
-#     # format="%(asctime)s [%(levelname)-5.5s]  %(message)s",
-#     handlers=[
-#         logging.StreamHandler()
-#     ])
-#
-# f1 = ipma_globalIds()
-# f2 = ipma_5days_local()
-# f3 = ipma_3days_day()
-# f4 = ipma_seismicity()
-# f5 = ipma_weatherIds()
-# f6 = ipma_windClasses()

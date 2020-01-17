@@ -1,13 +1,13 @@
 import importlib
 import logging
-from json import dumps
+
 from typing import List, Callable
 
 import yaml
-from kafka import KafkaProducer
 from yaml.parser import ParserError
 
 from .exit_codes import *
+from .genericOutput import GenericOutput
 from .genericSource import GenericSource
 
 
@@ -57,7 +57,7 @@ def read_args_and_config():
         exit(REFRESH_RATE_NOT_FOUND)
 
     # validate output
-    if not config.get('output'):
+    if not config.get('outputs'):
         print(f'No output configured, so nothing to do')
         exit(NO_OUTPUT_FOUND)
 
@@ -87,7 +87,7 @@ def instanciate_logging(config: dict):
     logging.info(f"Set verbosity to {logging.getLevelName(logging.getLogger().getEffectiveLevel())}")
 
 
-def instanciate_sources(modules: dict) -> List[GenericSource]:
+def instanciate_classes(modules: dict, module_root) -> List:
     """
     Creates sources based on the config file where each key is a module and each subkey is a class
     Each class can also have custom configurations when creating an instance
@@ -99,7 +99,7 @@ def instanciate_sources(modules: dict) -> List[GenericSource]:
     for module in modules.keys():
 
         # import python module
-        pmodule = importlib.import_module(f'{module}.{module}')
+        pmodule = importlib.import_module(f'{module_root}.{module}')
 
         # each source in the module may have configurations
         for source, params in modules[module].items():
@@ -109,7 +109,7 @@ def instanciate_sources(modules: dict) -> List[GenericSource]:
 
             if params:
                 # specific module config
-                instance = class_(params['enabled'])
+                instance = class_(**params)
             else:
                 instance = class_()
 
@@ -118,53 +118,9 @@ def instanciate_sources(modules: dict) -> List[GenericSource]:
     return classes_instantiated
 
 
-def instanciate_outputs(config: dict) -> List[Callable]:
-    """
-    Defines ouput functions that are invoked for each one of the sources
-    :param config: config file
-    :return: list with output functions
-    """
-    outputs = []
+def instanciate_sources(dict) -> List[GenericSource]:
+    return instanciate_classes(dict['sources'],'sources')
 
-    if config.get('console'):
-        # create a very dummy output
-        def print_to_console(source: GenericSource):
-            logging.info(f'Retrieved {len(source)} items from {source.name}')
 
-        outputs.append(print_to_console)
-
-    if config.get('writefiles'):
-        def write_to_file(source: GenericSource):
-            """
-            Stub that writes messages to a file and a new line on the end
-            :param source: source with messages to write
-            """
-
-            filename = f'{source.name}.txt'
-
-            logging.debug(f'Writing {len(source)} messages to file {filename}')
-
-            for msg in source:
-                with open(filename, "a") as myfile:
-                    myfile.write(str(msg))
-
-                with open(filename, "a") as myfile:
-                    myfile.write('\n')
-
-        outputs.append(write_to_file)
-
-    if config.get('kafka'):
-
-        kafka_server = config['kafka']['address']
-
-        kafka_producer = KafkaProducer(bootstrap_servers=[kafka_server],
-                                       value_serializer=lambda x: dumps(x).encode('utf-8'))
-
-        def send_to_kafka(source: GenericSource):
-
-            for msg in source:
-                kafka_producer.send(topic=source.name, value=msg)
-
-        outputs.append(send_to_kafka)
-
-    return outputs
+def instanciate_outputs(dict) -> List[GenericOutput]:
+    return instanciate_classes(dict['outputs'], 'outputs')

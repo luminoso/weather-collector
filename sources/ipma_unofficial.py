@@ -2,14 +2,14 @@ import logging
 
 from flatten_json import flatten
 
-from ipma.ipma import ipma_globalIds
+from sources.ipma import ipma_globalIds
 from utils.genericSource import GenericSource
 
 
 class ipma_dea(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
         self.url = 'https://www.ipma.pt/resources.www/transf/dea/dea.json'
 
     def refresh_source(self):
@@ -24,9 +24,9 @@ class ipma_dea(GenericSource):
 
 
 class ipma_hourly(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
         self.globalIds = ipma_globalIds()
 
     def refresh_source(self):
@@ -57,9 +57,9 @@ class ipma_hourly(GenericSource):
 
 
 class ipma_sto_hourly(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -79,9 +79,9 @@ class ipma_sto_hourly(GenericSource):
 
 
 class ipma_sto_daily(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -101,9 +101,9 @@ class ipma_sto_daily(GenericSource):
 
 
 class ipma_stations(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -118,9 +118,9 @@ class ipma_stations(GenericSource):
 
 
 class ipma_warnings(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -133,9 +133,9 @@ class ipma_warnings(GenericSource):
 
 
 class ipma_locations(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -146,9 +146,9 @@ class ipma_locations(GenericSource):
 
 
 class ipma_districts(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []
@@ -159,9 +159,9 @@ class ipma_districts(GenericSource):
 
 
 class ipma_wwis(GenericSource):
-    def __init__(self, enabled=True):
-        super().__init__()
-        self.enabled = enabled
+    def __init__(self, name=None):
+        super().__init__(name)
+        
 
     def refresh_source(self):
         self.data = []

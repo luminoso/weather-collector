@@ -8,10 +8,17 @@ import requests
 
 
 class GenericSource(UserList):
-    def __init__(self):
+    """
+    A source collects data and stores it in a list
+    """
+
+    def __init__(self, name=None):
         super().__init__()
-        # we use the class name as the source name
-        self.name = self.__class__.__name__
+
+        self.name = name
+        if not name:
+            # we use the class name as the source name
+            self.name = self.__class__.__name__
 
         # control variable to know differences between API calls refresh
         self._last_data = []

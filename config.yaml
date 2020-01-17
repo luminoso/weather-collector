@@ -1,28 +1,46 @@
 refresh_rate_minutes: 7
 verbosity: INFO
 
-output:
-  console: true
-  writefiles: true
+outputs:
+  console:
+    console_output_stats:
+#  file:
+#    file_out:
 #  kafka:
-#    address: 'xxx:9092'
+#    kafkaproducer:
+#      address: '172.17.0.1:9092'
 
 sources:
   ipma:
     ipma_globalIds:
+      name: 'ipma.globalids'
     ipma_5days_local:
+      name: 'ipma.5days_local'
     ipma_3days_day:
+      name: 'ipma.3days_day'
     ipma_seismicity:
+      name: 'ipma.seismicity'
     ipma_weatherIds:
+      name: 'ipma.weatherids'
     ipma_windClasses:
+      name: 'ipma.windclasses'
 
   ipma_unofficial:
     ipma_dea:
+      name: 'ipma.dea'
     ipma_hourly:
+      name: 'ipma.hourly'
     ipma_sto_hourly:
+      name: 'ipma.sto_hourly'
     ipma_sto_daily:
+      name: 'ipma.sto_daily'
     ipma_stations:
+      name: ipma.stations
     ipma_warnings:
+      name: 'ipma.warnings'
     ipma_locations:
+      name: 'ipma.locations'
     ipma_districts:
+      name: 'ipma.districts'
     ipma_wwis:
+      name: 'ipma.wwis'
