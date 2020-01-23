@@ -35,7 +35,7 @@ sources:
     ipma_sto_daily:
       name: 'ipma.sto_daily'
     ipma_stations:
-      name: ipma.stations
+      name: 'ipma.stations'
     ipma_warnings:
       name: 'ipma.warnings'
     ipma_locations:
